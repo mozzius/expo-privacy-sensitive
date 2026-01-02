@@ -1,19 +1,6 @@
 import type { StyleProp, ViewStyle } from 'react-native';
 
-export type OnLoadEventPayload = {
-  url: string;
-};
-
-export type ExpoPrivacySensitiveModuleEvents = {
-  onChange: (params: ChangeEventPayload) => void;
-};
-
-export type ChangeEventPayload = {
-  value: string;
-};
-
-export type ExpoPrivacySensitiveViewProps = {
-  url: string;
-  onLoad: (event: { nativeEvent: OnLoadEventPayload }) => void;
+export type PrivacySensitiveProps = {
+  children: React.ReactNode;
   style?: StyleProp<ViewStyle>;
 };

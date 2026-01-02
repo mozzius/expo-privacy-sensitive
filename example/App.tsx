@@ -1,73 +1,68 @@
-import { useEvent } from 'expo';
-import ExpoPrivacySensitive, { ExpoPrivacySensitiveView } from 'expo-privacy-sensitive';
-import { Button, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { PrivacySensitive } from 'expo-privacy-sensitive';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
-  const onChangePayload = useEvent(ExpoPrivacySensitive, 'onChange');
-
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.container}>
-        <Text style={styles.header}>Module API Example</Text>
-        <Group name="Constants">
-          <Text>{ExpoPrivacySensitive.PI}</Text>
-        </Group>
-        <Group name="Functions">
-          <Text>{ExpoPrivacySensitive.hello()}</Text>
-        </Group>
-        <Group name="Async functions">
-          <Button
-            title="Set value"
-            onPress={async () => {
-              await ExpoPrivacySensitive.setValueAsync('Hello from JS!');
-            }}
-          />
-        </Group>
-        <Group name="Events">
-          <Text>{onChangePayload?.value}</Text>
-        </Group>
-        <Group name="Views">
-          <ExpoPrivacySensitiveView
-            url="https://www.example.com"
-            onLoad={({ nativeEvent: { url } }) => console.log(`Loaded: ${url}`)}
-            style={styles.view}
-          />
-        </Group>
-      </ScrollView>
+      <Text style={styles.header}>Screenshot Protection Demo</Text>
+
+      <View style={styles.card}>
+        <Text style={styles.cardTitle}>Unprotected Content</Text>
+        <Text style={styles.cardText}>This text is visible in screenshots</Text>
+        <Text style={styles.cardText}>Card: 1234 5678 9012 3456</Text>
+      </View>
+
+      <PrivacySensitive style={styles.card}>
+        <Text style={styles.cardTitle}>Protected Content</Text>
+        <Text style={styles.cardText}>This text is hidden in screenshots!</Text>
+        <Text style={styles.cardText}>Card: 9876 5432 1098 7654</Text>
+        <Text style={styles.cardText}>Balance: $42,000.00</Text>
+      </PrivacySensitive>
+
+      <Text style={styles.footer}>
+        Take a screenshot - the protected content will be blank!
+      </Text>
     </SafeAreaView>
   );
 }
 
-function Group(props: { name: string; children: React.ReactNode }) {
-  return (
-    <View style={styles.group}>
-      <Text style={styles.groupHeader}>{props.name}</Text>
-      {props.children}
-    </View>
-  );
-}
-
-const styles = {
-  header: {
-    fontSize: 30,
-    margin: 20,
-  },
-  groupHeader: {
-    fontSize: 20,
-    marginBottom: 20,
-  },
-  group: {
-    margin: 20,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 20,
-  },
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#eee',
+    backgroundColor: '#f5f5f5',
+    padding: 20,
   },
-  view: {
-    flex: 1,
-    height: 200,
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginVertical: 20,
   },
-};
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 20,
+    marginVertical: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 12,
+  },
+  cardText: {
+    fontSize: 16,
+    color: '#333',
+    marginBottom: 8,
+  },
+  footer: {
+    textAlign: 'center',
+    color: '#666',
+    marginTop: 20,
+    fontSize: 14,
+  },
+});

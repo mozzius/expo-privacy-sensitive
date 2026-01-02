@@ -1,9 +1,6 @@
 {
-  "platforms": ["apple", "android", "web"],
+  "platforms": ["apple"],
   "apple": {
     "modules": ["ExpoPrivacySensitiveModule"]
-  },
-  "android": {
-    "modules": ["expo.modules.privacysensitive.ExpoPrivacySensitiveModule"]
   }
 }

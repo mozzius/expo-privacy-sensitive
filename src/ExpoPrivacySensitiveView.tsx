@@ -1,11 +1,9 @@
-import { requireNativeView } from 'expo';
 import * as React from 'react';
+import { View } from 'react-native';
 
-import { ExpoPrivacySensitiveViewProps } from './ExpoPrivacySensitive.types';
+import { PrivacySensitiveProps } from './ExpoPrivacySensitive.types';
 
-const NativeView: React.ComponentType<ExpoPrivacySensitiveViewProps> =
-  requireNativeView('ExpoPrivacySensitive');
-
-export default function ExpoPrivacySensitiveView(props: ExpoPrivacySensitiveViewProps) {
-  return <NativeView {...props} />;
+// Non-iOS fallback: just render children directly
+export default function PrivacySensitive({ children, style }: PrivacySensitiveProps) {
+  return <View style={style}>{children}</View>;
 }
