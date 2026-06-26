@@ -26,6 +26,31 @@ class ExpoPrivacySensitiveView: ExpoView {
     isSettingUp = false
   }
 
+#if RCT_NEW_ARCH_ENABLED
+  // On the new architecture (Fabric), `ExpoView` is an `RCTViewComponentView`
+  // subclass and React children are mounted/unmounted via these methods rather
+  // than `addSubview`/`insertSubview`. We reparent the children into the secure
+  // container here so they stay hidden in screenshots. Crucially, unmount must
+  // not fall through to `super`, whose assertion requires the child to be a
+  // direct subview of `self`; ours live inside `secureContainer`, so unmounting
+  // that way would crash with "Attempt to unmount a view which is mounted inside
+  // different view".
+  override func mountChildComponentView(_ childComponentView: UIView, index: Int) {
+    if let container = secureContainer {
+      container.insertSubview(childComponentView, at: index)
+    } else {
+      super.mountChildComponentView(childComponentView, index: index)
+    }
+  }
+
+  override func unmountChildComponentView(_ childComponentView: UIView, index: Int) {
+    if secureContainer != nil {
+      childComponentView.removeFromSuperview()
+    } else {
+      super.unmountChildComponentView(childComponentView, index: index)
+    }
+  }
+#else
   override func addSubview(_ view: UIView) {
     if isSettingUp || view === secureContainer {
       super.addSubview(view)
@@ -77,6 +102,7 @@ class ExpoPrivacySensitiveView: ExpoView {
       super.insertSubview(view, belowSubview: siblingSubview)
     }
   }
+#endif
 
   override func layoutSubviews() {
     super.layoutSubviews()
