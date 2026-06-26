@@ -12,7 +12,8 @@
     "prepare": "expo-module prepare",
     "prepublishOnly": "expo-module prepublishOnly",
     "expo-module": "expo-module",
-    "open:ios": "xed example/ios"
+    "open:ios": "xed example/ios",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [
     "react-native",
@@ -23,6 +24,18 @@
     "secure",
     "ios"
   ],
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.9.0",
+      "onFail": "warn"
+    },
+    "runtime": {
+      "name": "node",
+      "version": "26.4.0",
+      "onFail": "download"
+    }
+  },
   "repository": "https://github.com/mozzius/expo-privacy-sensitive",
   "bugs": {
     "url": "https://github.com/mozzius/expo-privacy-sensitive/issues"
@@ -30,17 +43,16 @@
   "author": "Samuel Newman <mozzius@protonmail.com> (https://github.com/mozzius)",
   "license": "MIT",
   "homepage": "https://github.com/mozzius/expo-privacy-sensitive#readme",
-  "dependencies": {},
   "devDependencies": {
-    "@types/react": "~19.1.0",
-    "expo-module-scripts": "^5.0.8",
-    "expo": "^54.0.27",
-    "react-native": "0.81.5"
+    "@types/jest": "^30.0.0",
+    "@types/react": "~19.2.17",
+    "expo": "^56.0.12",
+    "expo-module-scripts": "^56.0.3",
+    "react-native": "^0.86.0"
   },
   "peerDependencies": {
     "expo": "*",
     "react": "*",
     "react-native": "*"
-  },
-  "packageManager": "pnpm@10.26.2+sha512.0e308ff2005fc7410366f154f625f6631ab2b16b1d2e70238444dd6ae9d630a8482d92a451144debc492416896ed16f7b114a86ec68b8404b2443869e68ffda6"
+  }
 }
